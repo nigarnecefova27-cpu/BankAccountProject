@@ -1,14 +1,14 @@
 import java.util.Date
-
+ //9.polymor....
 enum class TransactionType(){
     DEPOSIT, WITHDRAW, TRANSFER_IN,TRANSFER_OUT, INTEREST
 }
 
-data class Customer(
+data class Customer(   //comment yaz
     val id: String,
     val fullName: String,
     val email: String,
-    val phone: String,
+    val phone: String
 )
 
 data class Transaction(
@@ -21,7 +21,7 @@ data class Transaction(
     val relatedAccountId: String? //deposit, withdraw
 )
 
-object IdGenerator {  //?
+object IdGenerator {  //?   util class
     private var counter = 0
     fun nextTxId(): String {
         counter = counter + 1
@@ -59,7 +59,14 @@ interface Withdrawable{
 interface InterestBearing{
     fun monthlyInterest() : Double
 }
-
+//is sadece yoxlanis , as casting edir
+fun nextMonth(list: List<Account>){
+    for(account in list){
+        if (account is InterestBearing){
+            account.monthlyInterest()
+        }
+    }
+}
 
 //?
 abstract class Account(
@@ -78,8 +85,7 @@ abstract class Account(
         balance += amount
         return OperationResult.Success("Deposited $amount", balance)
     }
-    override fun toString() =
-        "$id $typeName ${owner.fullName} ${"%.2f".format(balance)}"
+    override fun toString() ="$id $typeName ${owner.fullName} ${"%.2f".format(balance)}"
 }
 
 
@@ -211,18 +217,4 @@ class DepositAccount(
         return interest
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
